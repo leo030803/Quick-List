@@ -1,8 +1,14 @@
-const items = []
+let items = []
 
 function addItem() {
 
     const itemName = document.querySelector("#item").value
+
+    if (itemName === "") {
+
+        alert("Digite um item válido!")
+        return
+    }
 
     const item = {
 
@@ -35,7 +41,7 @@ function showItemsList() {
         <div>
 
         <input type="checkbox" name="list" id="item-${index}" ${item.checked === true ? "checked" : ""}>
-        <div class="custom-checkbox">
+        <div class="custom-checkbox" onclick="checkItem('${item.name}')">
 
         <img src="./assets/checked.svg" alt="checked">
         
@@ -54,6 +60,8 @@ function showItemsList() {
    
         
     })
+
+    localStorage.setItem("items", JSON.stringify(items))
 }
 
 function checkItem(itemName) {
@@ -84,6 +92,25 @@ function removeItem(itemName) {
     showItemsList()
 
 }
+
+function addHideWarningClass() {
+
+    document.querySelector(".warning").classList.add("hide-warning")
+}
+
+function verifyLocalStorageItems() {
+
+    const localStorageItems = localStorage.getItem("items")
+
+    if (localStorageItems) {
+
+        items = JSON.parse(localStorageItems)
+        showItemsList()
+    }
+}
+
+verifyLocalStorageItems()
+
 
 
 
